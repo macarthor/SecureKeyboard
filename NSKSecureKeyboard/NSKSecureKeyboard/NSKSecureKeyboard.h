@@ -22,9 +22,9 @@ FOUNDATION_EXPORT const unsigned char NSKSecureKeyboardVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <NSKSecureKeyboard/PublicHeader.h>
 
 typedef NS_ENUM(NSUInteger, NSKSecureKeyboardType) {
-    NSKSecureKeyboardTypeNumber,
     NSKSecureKeyboardTypeSymbol,
-    NSKSecureKeyboardTypeCharacter
+    NSKSecureKeyboardTypeCharacter,
+    NSKSecureKeyboardTypeNumber
 };
 
 @interface NSKSecureKeyboard : NSObject
