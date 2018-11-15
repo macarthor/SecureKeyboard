@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="xWw-zW-57B">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vnT-dJ-VQ0">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7U-fi-crO" userLabel="okButton">
+                            <rect key="frame" x="313" y="2" width="60" height="40"/>
+                            <color key="backgroundColor" red="0.066666666669999999" green="0.43529411759999997" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="Re6-yJ-sN7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.89431351420000005" green="0.9186601043" blue="0.55697405339999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="y7U-fi-crO" secondAttribute="trailing" constant="2" id="8Kz-ee-LUR"/>
+                        <constraint firstAttribute="bottom" secondItem="y7U-fi-crO" secondAttribute="bottom" constant="2" id="EVO-xb-q7x"/>
+                        <constraint firstItem="y7U-fi-crO" firstAttribute="top" secondItem="vnT-dJ-VQ0" secondAttribute="top" constant="2" id="EkV-K6-6Ik"/>
+                        <constraint firstAttribute="height" constant="44" id="lzA-mR-N3r"/>
+                        <constraint firstItem="y7U-fi-crO" firstAttribute="centerY" secondItem="vnT-dJ-VQ0" secondAttribute="centerY" id="vuX-0g-iyG"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="vnT-dJ-VQ0" firstAttribute="top" secondItem="xWw-zW-57B" secondAttribute="top" id="0GT-qZ-Smf"/>
+                <constraint firstAttribute="trailing" secondItem="vnT-dJ-VQ0" secondAttribute="trailing" id="9OW-dm-DF9"/>
+                <constraint firstItem="vnT-dJ-VQ0" firstAttribute="leading" secondItem="xWw-zW-57B" secondAttribute="leading" id="mk3-r1-DIs"/>
+            </constraints>
+            <point key="canvasLocation" x="32.799999999999997" y="-424.13793103448279"/>
+        </view>
+    </objects>
+</document>
