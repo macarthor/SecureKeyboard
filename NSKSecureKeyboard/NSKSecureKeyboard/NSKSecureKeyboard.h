@@ -10,14 +10,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <NSKSecureKeyboard/NSKKeyboardTypingDelegate.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
-//! Project version number for NSKSecureKeyboard.
-FOUNDATION_EXPORT double NSKSecureKeyboardVersionNumber;
-
-//! Project version string for NSKSecureKeyboard.
-FOUNDATION_EXPORT const unsigned char NSKSecureKeyboardVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <NSKSecureKeyboard/PublicHeader.h>
 
@@ -27,9 +22,11 @@ typedef NS_ENUM(NSUInteger, NSKSecureKeyboardType) {
     NSKSecureKeyboardTypeNumber
 };
 
-@interface NSKSecureKeyboard : NSObject
+@interface NSKSecureKeyboard : NSObject <NSKKeyboardTypingDelegate>
 
 + (instancetype)initWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType;
+
+- (NSString *)getPassword;
 
 @end
 

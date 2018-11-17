@@ -9,14 +9,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NSKKeyboardTypingDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define FRAMEWORK_BUNDLE ([NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"Frameworks/NSKSecureKeyboard.framework/NSKSecureKeyboardBundle" ofType:@"bundle"]])
+
 @interface NSKKeyboardTypingView : UIView
 
-- (void)typeACharacter:(NSString *)character;
-
-- (void)typeDelete;
+@property (nonatomic, strong) id<NSKKeyboardTypingDelegate> delegate;
 
 @end
 

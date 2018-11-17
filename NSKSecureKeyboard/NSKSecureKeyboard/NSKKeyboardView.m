@@ -28,17 +28,33 @@
 @property (nonatomic, strong) NSMutableArray<UILabel *> *labels;
 @property (nonatomic, strong) UILabel  *titleLabel;
 
+@property (nonatomic, strong) id<NSKKeyboardTypingDelegate> delegate;
+
 @end
 
 @implementation NSKKeyboardView
 
-+ (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType {
++ (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType typingDelegate:(id<NSKKeyboardTypingDelegate>)delegate {
     CGRect keyboardViewBounds = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, kViewHeight);
     NSKKeyboardView *keyboardView = [[NSKKeyboardView alloc] initWithFrame:keyboardViewBounds];
     keyboardView.textField = textField;
     [keyboardView.textField setInputView:keyboardView];
     keyboardView.keyboardType = keyboardType;
+    keyboardView.delegate = delegate;
     return keyboardView;
+}
+
+- (NSUInteger)getTextFieldCursorPosition {
+    return [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.start];
+}
+
+- (void)setTextFieldWithText:(NSString *)text cursorPosition:(NSUInteger)position {
+    [_textField setText:text];
+
+    UITextPosition *beginning = _textField.beginningOfDocument;
+    UITextPosition *selectPosition = [_textField positionFromPosition:beginning offset:position];
+    UITextRange *selectionRange = [_textField textRangeFromPosition:selectPosition toPosition:selectPosition];
+    [_textField setSelectedTextRange:selectionRange];
 }
 
 #pragma mark - override UIView methods
@@ -65,23 +81,39 @@
 }
 
 -(void)switchToSym:(UITapGestureRecognizer *)gesture {
+    if (gesture != nil && self.keyboardType == NSKSecureKeyboardTypeSymbol) {
+        return;
+    }
     self.keyboardType = NSKSecureKeyboardTypeSymbol;
     [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_typingView addSubview:[NSKKeyboardViewFactory getKeyboardView:self.keyboardType]];
+    NSKKeyboardTypingView *view = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
+    view.delegate = self.delegate;
+    [_typingView addSubview:view];
     [self highlightLabel:self.keyboardType];
 }
 
 -(void)switchToChar:(UITapGestureRecognizer *)gesture {
+    if (gesture != nil && self.keyboardType == NSKSecureKeyboardTypeCharacter) {
+        return;
+    }
     self.keyboardType = NSKSecureKeyboardTypeCharacter;
     [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_typingView addSubview:[NSKKeyboardViewFactory getKeyboardView:self.keyboardType]];
+    NSKKeyboardTypingView *view = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
+    view.delegate = self.delegate;
+    [_typingView addSubview:view];
     [self highlightLabel:self.keyboardType];
 }
 
 -(void)switchToNum:(UITapGestureRecognizer *)gesture {
+    if (gesture != nil && self.keyboardType == NSKSecureKeyboardTypeNumber) {
+        return;
+    }
     self.keyboardType = NSKSecureKeyboardTypeNumber;
     [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_typingView addSubview:[NSKKeyboardViewFactory getKeyboardView:self.keyboardType]];
+    NSKKeyboardTypingView *numView = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
+    numView.delegate = self.delegate;
+    [_typingView addSubview:numView];
+    numView.frame = self.typingView.bounds;
     [self highlightLabel:self.keyboardType];
 }
 
@@ -92,8 +124,14 @@
     [self addSubview:self.separatorView];
     [self addSubview:self.titleView];
     [self addSubview:self.typingView];
-    [_typingView addSubview:[NSKKeyboardViewFactory getKeyboardView:self.keyboardType]];
-    [self highlightLabel:self.keyboardType];
+
+    if (self.keyboardType == NSKSecureKeyboardTypeSymbol) {
+        [self switchToSym:nil];
+    } else if (self.keyboardType == NSKSecureKeyboardTypeCharacter) {
+        [self switchToChar:nil];
+    } else {
+        [self switchToNum:nil];
+    }
 }
 
 - (UIView *)separatorView {
@@ -106,9 +144,9 @@
 
 - (UIView *)titleView {
     if (!_titleView) {
-        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Frameworks/NSKSecureKeyboard.framework/NSKSecureKeyboardBundle" ofType:@"bundle"];
-        NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-        _titleView = ((UIView *) [[bundle loadNibNamed:@"TitleView" owner:nil options:nil] firstObject]);
+//        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Frameworks/NSKSecureKeyboard.framework/NSKSecureKeyboardBundle" ofType:@"bundle"];
+//        NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+        _titleView = ((UIView *) [[FRAMEWORK_BUNDLE loadNibNamed:@"TitleView" owner:nil options:nil] firstObject]);
 
         _finishButton = [_titleView.subviews.firstObject.subviews objectAtIndex:0];
         [_finishButton setTitle:@"完成" forState:UIControlStateNormal];
@@ -146,7 +184,6 @@
 - (UIView *)typingView {
     if (!_typingView) {
         _typingView = [UIView new];
-        [_typingView setBackgroundColor:[UIColor greenColor]];
     }
     return _typingView;
 }

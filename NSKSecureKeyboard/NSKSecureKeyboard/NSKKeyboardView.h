@@ -10,12 +10,16 @@
 
 #import <UIKit/UIKit.h>
 #import "NSKSecureKeyboard.h"
+#import "NSKKeyboardTypingDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSKKeyboardView : UIView
 
-+ (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType;
++ (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType typingDelegate:(id<NSKKeyboardTypingDelegate>)delegate;
+
+- (NSUInteger)getTextFieldCursorPosition;
+- (void)setTextFieldWithText:(NSString *)text cursorPosition:(NSUInteger)position;
 
 @end
 
