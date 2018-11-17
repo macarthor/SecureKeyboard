@@ -7,10 +7,14 @@
 //
 
 #import "NSKKeyboardViewFactory.h"
+#import "NSKKeyboardTypingNumView.h"
 
 @implementation NSKKeyboardViewFactory
 
-+ (NSKKeyboardTypingView *)getKeyboardView:(NSKSecureKeyboardType)keyboardType {
++ (NSKKeyboardTypingView *)getKeyboardView:(NSKSecureKeyboardType)keyboardType withFrame:(CGRect)frame {
+    if (keyboardType == NSKSecureKeyboardTypeNumber) {
+        return [[NSKKeyboardTypingNumView new] initWithFrame:frame];
+    }
     return nil;
 }
 

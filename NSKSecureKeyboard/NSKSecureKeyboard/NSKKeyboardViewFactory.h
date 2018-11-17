@@ -10,13 +10,14 @@
 
 #import <Foundation/Foundation.h>
 #import "NSKSecureKeyboard.h"
+#import "NSKKeyboardTypingDelegate.h"
 #import "NSKKeyboardTypingView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSKKeyboardViewFactory : NSObject
 
-+ (NSKKeyboardTypingView *)getKeyboardView:(NSKSecureKeyboardType)keyboardType;
++ (NSKKeyboardTypingView *)getKeyboardView:(NSKSecureKeyboardType)keyboardType withFrame:(CGRect)frame;
 
 @end
 
