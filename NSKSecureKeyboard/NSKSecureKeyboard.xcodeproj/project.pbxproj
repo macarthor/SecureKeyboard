@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6B100C45219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B100C44219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6B100C45219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B100C44219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h */; };
 		6BBC6F0E219A6E3F00AC9133 /* NSKSecureKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BBC6F0C219A6E3F00AC9133 /* NSKSecureKeyboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BBC6F0F219A6E3F00AC9133 /* NSKSecureKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBC6F0D219A6E3F00AC9133 /* NSKSecureKeyboard.m */; };
 		6BBC6F16219A7D3100AC9133 /* NSKKeyboardViewFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BBC6F14219A7D3100AC9133 /* NSKKeyboardViewFactory.h */; };
@@ -126,8 +126,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BBC6F0E219A6E3F00AC9133 /* NSKSecureKeyboard.h in Headers */,
-				6B100C45219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h in Headers */,
 				6BBC6F16219A7D3100AC9133 /* NSKKeyboardViewFactory.h in Headers */,
+				6B100C45219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h in Headers */,
 				6BBC6F4F219D7A6000AC9133 /* NSKKeyboardTypingNumView.h in Headers */,
 				6BBC6F56219EBEB800AC9133 /* NSKKeyboardTypingView.h in Headers */,
 				6BBC6F1A219A90E700AC9133 /* NSKKeyboardView.h in Headers */,

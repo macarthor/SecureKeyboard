@@ -14,12 +14,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSKKeyboardView : UIView
+@interface NSKKeyboardView : UIView <NSKKeyboardTypingDelegate>
 
-+ (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType typingDelegate:(id<NSKKeyboardTypingDelegate>)delegate;
++ (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType;
 
 - (NSUInteger)getTextFieldCursorPosition;
 - (void)setTextFieldWithText:(NSString *)text cursorPosition:(NSUInteger)position;
+- (NSString *)getPassword;
 
 @end
 
