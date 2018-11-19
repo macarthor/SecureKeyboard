@@ -28,19 +28,19 @@
 @property (nonatomic, strong) NSMutableArray<UILabel *> *labels;
 @property (nonatomic, strong) UILabel  *titleLabel;
 
-@property (nonatomic, strong) id<NSKKeyboardTypingDelegate> delegate;
+@property (nonatomic, strong) NSMutableString *blankPassword;
 
 @end
 
 @implementation NSKKeyboardView
 
-+ (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType typingDelegate:(id<NSKKeyboardTypingDelegate>)delegate {
++ (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType {
     CGRect keyboardViewBounds = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, kViewHeight);
     NSKKeyboardView *keyboardView = [[NSKKeyboardView alloc] initWithFrame:keyboardViewBounds];
     keyboardView.textField = textField;
     [keyboardView.textField setInputView:keyboardView];
+    [keyboardView.textField setSecureTextEntry:YES];
     keyboardView.keyboardType = keyboardType;
-    keyboardView.delegate = delegate;
     return keyboardView;
 }
 
@@ -55,6 +55,10 @@
     UITextPosition *selectPosition = [_textField positionFromPosition:beginning offset:position];
     UITextRange *selectionRange = [_textField textRangeFromPosition:selectPosition toPosition:selectPosition];
     [_textField setSelectedTextRange:selectionRange];
+}
+
+- (NSString *)getPassword {
+    return _blankPassword;
 }
 
 #pragma mark - override UIView methods
@@ -87,7 +91,7 @@
     self.keyboardType = NSKSecureKeyboardTypeSymbol;
     [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSKKeyboardTypingView *view = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
-    view.delegate = self.delegate;
+    view.delegate = self;
     [_typingView addSubview:view];
     [self highlightLabel:self.keyboardType];
 }
@@ -99,7 +103,7 @@
     self.keyboardType = NSKSecureKeyboardTypeCharacter;
     [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSKKeyboardTypingView *view = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
-    view.delegate = self.delegate;
+    view.delegate = self;
     [_typingView addSubview:view];
     [self highlightLabel:self.keyboardType];
 }
@@ -111,10 +115,38 @@
     self.keyboardType = NSKSecureKeyboardTypeNumber;
     [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSKKeyboardTypingView *numView = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
-    numView.delegate = self.delegate;
+    numView.delegate = self;
     [_typingView addSubview:numView];
     numView.frame = self.typingView.bounds;
     [self highlightLabel:self.keyboardType];
+}
+
+#pragma mark - NSKKeyboardTypingDelegate methods
+
+- (void)typeACharacter:(NSString *)character {
+    NSUInteger position = [self getTextFieldCursorPosition];
+    if (position > _blankPassword.length) {
+        return;
+    }
+    if (!_blankPassword) {
+        _blankPassword = [NSMutableString string];
+    }
+    [_blankPassword insertString:character atIndex:position];
+
+    [self setTextFieldWithText:_blankPassword cursorPosition:position + 1];
+}
+
+- (void)typeDelete {
+    if (!_blankPassword || _blankPassword.length == 0) {
+        return;
+    }
+    NSUInteger position = [self getTextFieldCursorPosition];
+    if (position == 0) {
+        return;
+    }
+    [_blankPassword deleteCharactersInRange:NSMakeRange(position - 1, 1)];
+
+    [self setTextFieldWithText:_blankPassword cursorPosition:position - 1];
 }
 
 #pragma mark - Private methods

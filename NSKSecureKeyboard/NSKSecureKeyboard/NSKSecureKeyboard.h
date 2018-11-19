@@ -10,7 +10,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <NSKSecureKeyboard/NSKKeyboardTypingDelegate.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,7 +21,7 @@ typedef NS_ENUM(NSUInteger, NSKSecureKeyboardType) {
     NSKSecureKeyboardTypeNumber
 };
 
-@interface NSKSecureKeyboard : NSObject <NSKKeyboardTypingDelegate>
+@interface NSKSecureKeyboard : NSObject
 
 + (instancetype)initWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType;
 
