@@ -9,9 +9,12 @@ an iOS secure and extendable keyboard UIView, not an IME.
 - the library is well architectured, you just need to implement your own key layout. just refer to one of NSKKeyboardTypingNumView/NSKKeyboardTypingCharacterView/NSKKeyboardTypingSymbolView.
 
 ## easy to use
-``` in some UIViewController, there is an UITextField
+```
+// in some UIViewController, there is an UITextField
 [NSKSecureKeyboard initWithTextField:self.textField keyboardType:NSKSecureKeyboardTypeCharacter];
 ```
+
+
 
 it supports 3 layouts by now:
 
