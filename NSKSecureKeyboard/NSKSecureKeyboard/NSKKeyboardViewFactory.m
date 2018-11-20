@@ -9,6 +9,7 @@
 #import "NSKKeyboardViewFactory.h"
 #import "NSKKeyboardTypingNumView.h"
 #import "NSKKeyboardTypingCharacterView.h"
+#import "NSKKeyboardTypingSymbolView.h"
 
 @implementation NSKKeyboardViewFactory
 
@@ -24,6 +25,7 @@
             break;
 
         case NSKSecureKeyboardTypeSymbol:
+            view = [[NSKKeyboardTypingSymbolView new] initWithFrame:frame];
             break;
 
         default:

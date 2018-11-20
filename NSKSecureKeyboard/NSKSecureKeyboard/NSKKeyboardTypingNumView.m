@@ -3,7 +3,7 @@
 //  NSKSecureKeyboard
 //
 //  Created by McArthor Lee on 2018/11/15.
-//  Copyright © 2018 nationsky. All rights reserved.
+//  Copyright © 2018 McArthor Lee. All rights reserved.
 //
 
 #import "NSKKeyboardTypingNumView.h"
@@ -104,7 +104,7 @@
     for (int i = 0; i < round; i++) {
         int rndIndex = arc4random() % startArray.count;
         _randomNumberArray[i] = startArray[rndIndex];
-        startArray[rndIndex] = [startArray lastObject]; //为更好的乱序，故交换下位置
+        startArray[rndIndex] = [startArray lastObject];
         [startArray removeLastObject];
     }
 }
