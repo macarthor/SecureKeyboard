@@ -1,8 +1,8 @@
 //
-//  NSKKeyboardTypingNumView.h
+//  NSKKeyboardTypingSymbolView.h
 //  NSKSecureKeyboard
 //
-//  Created by McArthor Lee on 2018/11/15.
+//  Created by McArthor Lee on 2018/11/20.
 //  Copyright © 2018 McArthor Lee. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSKKeyboardTypingNumView : NSKKeyboardTypingView
+@interface NSKKeyboardTypingSymbolView : NSKKeyboardTypingView
 
 @end
 

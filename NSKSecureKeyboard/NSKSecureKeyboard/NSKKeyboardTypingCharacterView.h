@@ -3,7 +3,7 @@
 //  NSKSecureKeyboard
 //
 //  Created by McArthor Lee on 2018/11/19.
-//  Copyright © 2018 nationsky. All rights reserved.
+//  Copyright © 2018 McArthor Lee. All rights reserved.
 //
 
 #import "NSKKeyboardTypingView.h"
