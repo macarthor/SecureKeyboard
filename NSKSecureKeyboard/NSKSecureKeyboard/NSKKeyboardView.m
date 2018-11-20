@@ -17,7 +17,7 @@
 #define kViewHeight (kSeparatorViewHeight + kTitleViewHeight + kKeyboardTypingViewHeight)
 
 @property (nonatomic, weak) UITextField *textField;
-@property (nonatomic) NSKSecureKeyboardType keyboardType;
+@property (nonatomic, assign) NSKSecureKeyboardType keyboardType;
 
 @property (nonatomic, strong) UIView *separatorView;
 @property (nonatomic, strong) UIView *titleView;
@@ -28,6 +28,8 @@
 @property (nonatomic, strong) NSMutableArray<UILabel *> *labels;
 @property (nonatomic, strong) UILabel  *titleLabel;
 
+@property (nonatomic, assign) BOOL fromInit;
+
 @property (nonatomic, strong) NSMutableString *blankPassword;
 
 @end
@@ -36,11 +38,10 @@
 
 + (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType {
     CGRect keyboardViewBounds = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, kViewHeight);
-    NSKKeyboardView *keyboardView = [[NSKKeyboardView alloc] initWithFrame:keyboardViewBounds];
+    NSKKeyboardView *keyboardView = [[NSKKeyboardView alloc] initWithFrame:keyboardViewBounds keyboardType:keyboardType];
     keyboardView.textField = textField;
     [keyboardView.textField setInputView:keyboardView];
     [keyboardView.textField setSecureTextEntry:YES];
-    keyboardView.keyboardType = keyboardType;
     return keyboardView;
 }
 
@@ -63,9 +64,11 @@
 
 #pragma mark - override UIView methods
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame keyboardType:(NSKSecureKeyboardType)keyboardType {
     self = [super initWithFrame:frame];
     if (self) {
+        _keyboardType = keyboardType;
+        _fromInit = YES;
         [self setupSubViews];
     }
     return self;
@@ -76,6 +79,7 @@
     _separatorView.frame = CGRectMake(0, 0, self.frame.size.width, kSeparatorViewHeight);
     _titleView.frame = CGRectMake(0, kSeparatorViewHeight, self.frame.size.width, kTitleViewHeight);
     _typingView.frame = CGRectMake(0, kSeparatorViewHeight + kTitleViewHeight, self.frame.size.width, kKeyboardTypingViewHeight);
+    _typingView.subviews.firstObject.frame = _typingView.bounds;
 }
 
 #pragma mark - click actions
@@ -84,40 +88,19 @@
     [self.textField endEditing:YES];
 }
 
--(void)switchToSym:(UITapGestureRecognizer *)gesture {
-    if (gesture != nil && self.keyboardType == NSKSecureKeyboardTypeSymbol) {
+-(void)switchKeyboard:(UITapGestureRecognizer *)gesture {
+    UILabel *label = (UILabel *) gesture.view;
+    NSKSecureKeyboardType keyboardType = [_labels indexOfObject:label];
+    if (!_fromInit && self.keyboardType == keyboardType) {
         return;
     }
-    self.keyboardType = NSKSecureKeyboardTypeSymbol;
+    _fromInit = NO;
+    self.keyboardType = keyboardType;
     [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSKKeyboardTypingView *view = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
     view.delegate = self;
     [_typingView addSubview:view];
-    [self highlightLabel:self.keyboardType];
-}
-
--(void)switchToChar:(UITapGestureRecognizer *)gesture {
-    if (gesture != nil && self.keyboardType == NSKSecureKeyboardTypeCharacter) {
-        return;
-    }
-    self.keyboardType = NSKSecureKeyboardTypeCharacter;
-    [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    NSKKeyboardTypingView *view = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
-    view.delegate = self;
-    [_typingView addSubview:view];
-    [self highlightLabel:self.keyboardType];
-}
-
--(void)switchToNum:(UITapGestureRecognizer *)gesture {
-    if (gesture != nil && self.keyboardType == NSKSecureKeyboardTypeNumber) {
-        return;
-    }
-    self.keyboardType = NSKSecureKeyboardTypeNumber;
-    [[_typingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    NSKKeyboardTypingView *numView = [NSKKeyboardViewFactory getKeyboardView:self.keyboardType withFrame:self.typingView.bounds];
-    numView.delegate = self;
-    [_typingView addSubview:numView];
-    numView.frame = self.typingView.bounds;
+    view.frame = _typingView.bounds;
     [self highlightLabel:self.keyboardType];
 }
 
@@ -157,13 +140,17 @@
     [self addSubview:self.titleView];
     [self addSubview:self.typingView];
 
+    UITapGestureRecognizer *recognizer = [UITapGestureRecognizer new];
+    UILabel *label;
     if (self.keyboardType == NSKSecureKeyboardTypeSymbol) {
-        [self switchToSym:nil];
+        label = [_labels objectAtIndex:0];
     } else if (self.keyboardType == NSKSecureKeyboardTypeCharacter) {
-        [self switchToChar:nil];
+        label = [_labels objectAtIndex:1];
     } else {
-        [self switchToNum:nil];
+        label = [_labels objectAtIndex:2];
     }
+    [recognizer setValue:label forKey:@"view"];
+    [self switchKeyboard:recognizer];
 }
 
 - (UIView *)separatorView {
@@ -176,8 +163,6 @@
 
 - (UIView *)titleView {
     if (!_titleView) {
-//        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Frameworks/NSKSecureKeyboard.framework/NSKSecureKeyboardBundle" ofType:@"bundle"];
-//        NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
         _titleView = ((UIView *) [[FRAMEWORK_BUNDLE loadNibNamed:@"TitleView" owner:nil options:nil] firstObject]);
 
         _finishButton = [_titleView.subviews.firstObject.subviews objectAtIndex:0];
@@ -189,21 +174,21 @@
         [_labels setObject:[_titleView.subviews.firstObject.subviews objectAtIndex:1] atIndexedSubscript:0];
         UILabel *symLabel = [_labels objectAtIndex:0];
         [symLabel setText:@"符号"];
-        UITapGestureRecognizer *recognizerSym = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchToSym:)];
+        UITapGestureRecognizer *recognizerSym = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchKeyboard:)];
         symLabel.userInteractionEnabled = YES;
         [symLabel addGestureRecognizer:recognizerSym];
 
         [_labels setObject:[_titleView.subviews.firstObject.subviews objectAtIndex:2] atIndexedSubscript:1];
         UILabel *charLabel = [_labels objectAtIndex:1];
         [charLabel setText:@"字母"];
-        UITapGestureRecognizer *recognizerChar = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchToChar:)];
+        UITapGestureRecognizer *recognizerChar = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchKeyboard:)];
         charLabel.userInteractionEnabled = YES;
         [charLabel addGestureRecognizer:recognizerChar];
 
         [_labels setObject:[_titleView.subviews.firstObject.subviews objectAtIndex:3] atIndexedSubscript:2];
         UILabel *numLabel = [_labels objectAtIndex:2];
         [numLabel setText:@"数字"];
-        UITapGestureRecognizer *recognizerNum = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchToNum:)];
+        UITapGestureRecognizer *recognizerNum = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchKeyboard:)];
         numLabel.userInteractionEnabled = YES;
         [numLabel addGestureRecognizer:recognizerNum];
 

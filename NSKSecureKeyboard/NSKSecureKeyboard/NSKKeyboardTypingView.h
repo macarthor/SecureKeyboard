@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSKKeyboardTypingView : UIView
 
+#define kItemSpacing 4
+
 @property (nonatomic, strong) id<NSKKeyboardTypingDelegate> delegate;
 
 @end

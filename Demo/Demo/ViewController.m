@@ -23,7 +23,7 @@
     self.textField.layer.borderColor = [[UIColor redColor] CGColor];
     self.textField.layer.borderWidth = 5.0f;
     self.textField.layer.cornerRadius = 20.0f;
-    [NSKSecureKeyboard initWithTextField:self.textField keyboardType:NSKSecureKeyboardTypeSymbol];
+    [NSKSecureKeyboard initWithTextField:self.textField keyboardType:NSKSecureKeyboardTypeCharacter];
 }
 
 

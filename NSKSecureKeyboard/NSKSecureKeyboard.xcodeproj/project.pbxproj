@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6B100C45219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B100C44219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h */; };
+		6B69ACBC21A27896000DFC40 /* NSKKeyboardTypingCharacterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B69ACBA21A27896000DFC40 /* NSKKeyboardTypingCharacterView.h */; };
+		6B69ACBD21A27896000DFC40 /* NSKKeyboardTypingCharacterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B69ACBB21A27896000DFC40 /* NSKKeyboardTypingCharacterView.m */; };
 		6BBC6F0E219A6E3F00AC9133 /* NSKSecureKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BBC6F0C219A6E3F00AC9133 /* NSKSecureKeyboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BBC6F0F219A6E3F00AC9133 /* NSKSecureKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBC6F0D219A6E3F00AC9133 /* NSKSecureKeyboard.m */; };
 		6BBC6F16219A7D3100AC9133 /* NSKKeyboardViewFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BBC6F14219A7D3100AC9133 /* NSKKeyboardViewFactory.h */; };
@@ -35,6 +37,8 @@
 
 /* Begin PBXFileReference section */
 		6B100C44219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSKKeyboardTypingDelegate.h; sourceTree = "<group>"; };
+		6B69ACBA21A27896000DFC40 /* NSKKeyboardTypingCharacterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSKKeyboardTypingCharacterView.h; sourceTree = "<group>"; };
+		6B69ACBB21A27896000DFC40 /* NSKKeyboardTypingCharacterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSKKeyboardTypingCharacterView.m; sourceTree = "<group>"; };
 		6BA7D4C8219A695E0090741D /* NSKSecureKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NSKSecureKeyboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA7D4CC219A695E0090741D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BBC6F0C219A6E3F00AC9133 /* NSKSecureKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSKSecureKeyboard.h; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 				6BBC6F19219A90E700AC9133 /* NSKKeyboardView.m */,
 				6BBC6F4D219D7A6000AC9133 /* NSKKeyboardTypingNumView.h */,
 				6BBC6F4E219D7A6000AC9133 /* NSKKeyboardTypingNumView.m */,
+				6B69ACBA21A27896000DFC40 /* NSKKeyboardTypingCharacterView.h */,
+				6B69ACBB21A27896000DFC40 /* NSKKeyboardTypingCharacterView.m */,
 			);
 			path = NSKSecureKeyboard;
 			sourceTree = "<group>";
@@ -125,6 +131,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B69ACBC21A27896000DFC40 /* NSKKeyboardTypingCharacterView.h in Headers */,
 				6BBC6F0E219A6E3F00AC9133 /* NSKSecureKeyboard.h in Headers */,
 				6BBC6F16219A7D3100AC9133 /* NSKKeyboardViewFactory.h in Headers */,
 				6B100C45219EC7CB00EE6B38 /* NSKKeyboardTypingDelegate.h in Headers */,
@@ -235,6 +242,7 @@
 			files = (
 				6BBC6F50219D7A6000AC9133 /* NSKKeyboardTypingNumView.m in Sources */,
 				6BBC6F0F219A6E3F00AC9133 /* NSKSecureKeyboard.m in Sources */,
+				6B69ACBD21A27896000DFC40 /* NSKKeyboardTypingCharacterView.m in Sources */,
 				6BBC6F58219EC37400AC9133 /* NSKKeyboardTypingView.m in Sources */,
 				6BBC6F17219A7D3100AC9133 /* NSKKeyboardViewFactory.m in Sources */,
 				6BBC6F1B219A90E700AC9133 /* NSKKeyboardView.m in Sources */,

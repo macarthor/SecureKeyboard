@@ -8,14 +8,28 @@
 
 #import "NSKKeyboardViewFactory.h"
 #import "NSKKeyboardTypingNumView.h"
+#import "NSKKeyboardTypingCharacterView.h"
 
 @implementation NSKKeyboardViewFactory
 
 + (NSKKeyboardTypingView *)getKeyboardView:(NSKSecureKeyboardType)keyboardType withFrame:(CGRect)frame {
-    if (keyboardType == NSKSecureKeyboardTypeNumber) {
-        return [[NSKKeyboardTypingNumView new] initWithFrame:frame];
+    NSKKeyboardTypingView *view = nil;
+    switch (keyboardType) {
+        case NSKSecureKeyboardTypeNumber:
+            view = [[NSKKeyboardTypingNumView new] initWithFrame:frame];
+            break;
+
+        case NSKSecureKeyboardTypeCharacter:
+            view = [[NSKKeyboardTypingCharacterView new] initWithFrame:frame];
+            break;
+
+        case NSKSecureKeyboardTypeSymbol:
+            break;
+
+        default:
+            break;
     }
-    return nil;
+    return view;
 }
 
 @end
