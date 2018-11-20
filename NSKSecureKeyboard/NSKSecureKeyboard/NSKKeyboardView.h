@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)getViewWithTextField:(UITextField *)textField keyboardType:(NSKSecureKeyboardType)keyboardType;
 
+- (instancetype)initWithFrame:(CGRect)frame keyboardType:(NSKSecureKeyboardType)keyboardType;
+
 - (NSUInteger)getTextFieldCursorPosition;
 - (void)setTextFieldWithText:(NSString *)text cursorPosition:(NSUInteger)position;
 - (NSString *)getPassword;

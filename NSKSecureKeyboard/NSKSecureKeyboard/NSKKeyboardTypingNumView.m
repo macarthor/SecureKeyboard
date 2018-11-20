@@ -10,7 +10,6 @@
 
 #define kIdentifier (NSStringFromClass([NSKKeyboardTypingNumView class]))
 
-#define kItemSpacing 4
 #define kColumnCount 3
 #define kItemCount 12
 
